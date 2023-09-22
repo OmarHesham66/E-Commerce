@@ -5,10 +5,12 @@ use App\Models\Category;
 use App\Models\UserCart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Shop\ShopController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\CheckOut\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +24,11 @@ use App\Http\Controllers\Product\ProductController;
 */
 
 define('PAGINATE', 12);
+Route::get('/', [HomeController::class, 'get_home_site'])->name('home-site');
+
 Route::group(['middleware' => 'guest'], function () {
     /////////////////////////////////////////HOME/////////////////////////////////////////////
-    Route::get('/', [HomeController::class, 'get_home_site'])->name('welcome');
+    // Route::get('/', [HomeController::class, 'get_home_site'])->name('welcome');
     /////////////////////////////////////////LOGIN & REGISTER /////////////////////////////////////////////
     Route::get('/login', [AuthController::class, 'get_login'])->name('get_login');
     Route::post('/login', [AuthController::class, 'post_login'])->name('post_login');
@@ -32,32 +36,28 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/register', [AuthController::class, 'post_register'])->name('post_register');
 });
 Route::group(['namespace' => 'user', 'middleware' => 'auth:web'], function () {
-    Route::get('/home', [HomeController::class, 'get_home_site'])->name('home-site');
     Route::get('/logout', [AuthController::class, 'get_logout'])->name('get_logout');
 });
 /////////////////////////////////////////SHOP/////////////////////////////////////////////
 Route::controller(ShopController::class)->group(function () {
-    Route::get('/shop', 'get_shop')->name('get_shop');
-    Route::get('/fashion', 'get_fashion')->name('fashion');
-    Route::get('/shop-categories/{category_id}', 'get_shop_by_category')->name('get_shop_by_category');
-    Route::get('/shop-deals', 'get_shop_by_discount')->name('get_shop_by_discount');
-    Route::get('/shop-summer', 'get_shop_by_summer')->name('get_shop_by_summer');
+    Route::get('/shop/{data?}', 'get_shop')->name('get_shop');
 });
-
 /////////////////////////////////////////PRODUCT-DETIALS///////////////////////////////////////////////////////////
 Route::get('/product-details/{id}', [ProductController::class, 'get_details_product'])->name('get_details_product');
-Route::get('lol/{id}', function ($id) {
-    $options_ids = [];
-    $qtys = [];
-    for ($i = count([2, 2, 2, 2]) - 1; $i > 0; $i--) {
-        if ($id <= [2, 2, 2, 2][$i]) {
-            array_push($qtys, (int)$id);
-            array_push($options_ids, [2, 8, 20, 50][$i]);
-            return [$options_ids, $qtys];
-        }
-        $id = $id - [2, 2, 2, 2][$i];
-        array_push($qtys, [2, 2, 2, 2][$i]);
-        array_push($options_ids, [2, 8, 20, 50][$i]);
-    }
-    return [$options_ids, $qtys];
+/////////////////////////////////////////CART///////////////////////////////////////////////////////////
+Route::controller(CartController::class)->prefix('cart')->group(function () {
+    Route::get('/show', 'show')->name('show.cart');
+    Route::post('/discount', 'check_coupone')->name('check.coupone');
+    // Route::delete('/cart', 'delete')->name('delete.cart');
+});
+Route::controller(CheckoutController::class)->prefix('checkout')->group(function () {
+    Route::get('/show', 'show')->name('checkout.show');
+});
+Route::get('/pop', function () {
+    $cart = UserCart::first();
+    // $cartItem = $cart->Products;
+    // return $cart->Products[0]->pivot;
+    // $options = $cart->CartItems()->with('Options')->get();
+    // return $cart;
+    return $cart->Products[0];
 });

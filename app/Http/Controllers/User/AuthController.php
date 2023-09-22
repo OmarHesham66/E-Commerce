@@ -15,14 +15,14 @@ class AuthController extends Controller
     use Save_photos;
     public function get_login()
     {
-        return view('login');
+        return view('Site.Auth.login');
     }
 
     public function post_login(FormLogin $req)
     {
         $checker = Auth::guard('web')->attempt(['email' => $req->email, 'password' => $req->password]);
         if (!$checker) {
-            return view('login')->with('failed_login', 'The Email or Password Wrong !');
+            return view('Site.Auth.login')->with('failed_login', 'The Email or Password Wrong !');
         } else {
             // if (auth()->user()->role == 'user') {
             //     return redirect()->route('dash_user');
@@ -34,12 +34,12 @@ class AuthController extends Controller
     }
     public function get_register()
     {
-        return view('Site.register');
+        return view('Site.Auth.register');
     }
     public function post_register(FormRegister $req)
     {
         if ($req->photo) {
-            $photo = $this->save_photo('Images/users_photos', $req->photo);
+            $photo = $this->save_photo('users_photos', $req->photo);
         } else {
             $photo = 'Profile.png';
         }
@@ -50,7 +50,7 @@ class AuthController extends Controller
             'photo' => $photo,
         ]);
         notify()->success('Registeration is Success', 'Registeration');
-        return view('login');
+        return view('Site.Auth.login');
     }
     public function get_logout()
     {

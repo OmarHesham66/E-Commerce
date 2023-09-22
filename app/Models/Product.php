@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Brand;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -49,6 +50,29 @@ class Product extends Model
     }
     public function Products()
     {
-        return $this->belongsToMany(Product::class, 'cart_items', 'users_cart_id', 'product_id', 'id', 'id');
+        return $this->belongsToMany(Product::class, 'cart_items', 'cart_id', 'product_id', 'id', 'id');
+    }
+    public function scopeFilter(Builder $builder, $data)
+    {
+        $arr = array_merge([
+            'category_id' => null,
+            'discount' => null,
+            'fashion' => []
+        ], $data);
+        $builder->when($arr['category_id'], function ($builder, $value) {
+            return $builder->where('category_id', $value);
+        });
+        $builder->when($arr['discount'], function ($builder, $value) {
+            return $builder->where('discount', $value);
+        });
+        $builder->when($arr['fashion'], function ($builder, $value) {
+            return $builder->select('products.*', 'super-categories.name as super-category-name')
+                ->join('categories', 'categories.id', '=', 'products.category_id')
+                ->join('super-categories', 'super-categories.id', '=', 'categories.super_categories_id')
+                ->whereIn(
+                    'super-categories.name',
+                    $value
+                );
+        });
     }
 }

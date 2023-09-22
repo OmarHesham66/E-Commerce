@@ -82,15 +82,15 @@
         <div class="container">
             <div class="header-wrap">
                 <div class="logo logo-width-1">
-                    @auth
+                    {{-- @auth --}}
                     <a href="{{ route('home-site') }}">
                         <img src="{{ asset('assets/imgs/logo/logo.png')}}" alt="logo">
                     </a>
-                    @else
+                    {{-- @else
                     <a href="{{ route('welcome') }}">
                         <img src="{{ asset('assets/imgs/logo/logo.png')}}" alt="logo">
                     </a>
-                    @endauth
+                    @endauth --}}
                 </div>
                 <div class="header-right">
                     <div class="search-style-1">
@@ -229,7 +229,7 @@
                                             <a class="menu-title" href="#">{{ $super->name }}</a>
                                             <ul>
                                                 @foreach ($super->Categories as $category)
-                                                <li><a href="{{ route('get_shop_by_category',$category->id) }}">{{
+                                                <li><a href="{{ route('get_shop',['category'=>$category->id]) }}">{{
                                                         $category->name }}</a></li>
                                                 @endforeach
                                             </ul>

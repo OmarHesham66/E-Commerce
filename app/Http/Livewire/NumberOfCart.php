@@ -18,6 +18,6 @@ class NumberOfCart extends Component
         $this->cart = $Cart->ShowCart();
         $this->total = $Cart->total();
         $this->number = (!$this->cart->count()) ?  0 : $Cart->ProductNumber();
-        return view('livewire.number-of-cart');
+        return view('livewire.ProductPage.number-of-cart');
     }
 }

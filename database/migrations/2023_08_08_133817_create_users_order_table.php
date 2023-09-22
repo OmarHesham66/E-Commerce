@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('users_order', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->nullOnDelete();
-            $table->tinyInteger('status')->default(0);
-            $table->decimal('total_price');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->nullOnDelete();
+            $table->enum('status_order', ['pending', 'shiping', 'complete', 'cancel'])->default('pending');
+            $table->enum('status_payment', ['pending', 'paid', 'failed'])->default('pending');
+            $table->string('payment_method');
+            $table->float('shiping_price');
+            $table->float('total_price');
             $table->timestamps();
         });
     }

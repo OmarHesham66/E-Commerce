@@ -19,13 +19,14 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
+        $arr = ['Shirts', 'Jackets', 'Caps', 'Shoes', 'Shorts', 'Hoodies'];
         // $arr = ['Dresses', 'Blouses', 'Shirts', 'Hoodies', 'WomenSets', 'Leggings', 'Skirts', 'Shorts', 'Jeans'];
-        $arr = ['Laptops', 'LaptopAccessories', 'Phones', 'PhoneAccessories'];
+        // $arr = ['Laptops', 'LaptopAccessories', 'Phones', 'PhoneAccessories'];
         // $arr2=['']
         return [
             'name' => $arr[$this->counter1++],
             'photo' =>  $arr[$this->counter2++] . '.jpg',
-            'super_categories_id' => 3
+            'super_categories_id' => 2
         ];
     }
 }

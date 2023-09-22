@@ -23,7 +23,7 @@ return new class extends Migration
             $table->decimal('discount')->nullable();
             $table->enum('avaliable', ['Avaliable', 'Unavaliable']);
             $table->integer('quantity')->nullable();
-            $table->foreignId('brand_id')->references('id')->on('brands')->cascadeOnDelete();
+            $table->foreignId('brand_id')->nullable()->references('id')->on('brands')->cascadeOnDelete();
             $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->timestamps();
         });

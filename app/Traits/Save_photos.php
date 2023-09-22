@@ -10,7 +10,7 @@ trait Save_photos
     {
         $ex = $photo->getClientOriginalExtention();
         $fileName = time() . '.' . $ex;
-        $photo->move($path, $fileName);
+        $photo->storeAs($path, $fileName, 'Images');
         return $fileName;
     }
 }

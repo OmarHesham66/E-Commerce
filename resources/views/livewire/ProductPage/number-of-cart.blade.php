@@ -1,5 +1,5 @@
 <div class="header-action-icon-2">
-    <a class="mini-cart-icon" href="cart.html">
+    <a class="mini-cart-icon" href="{{ route('show.cart') }}">
         <img alt="Surfside Media" src="{{ asset('assets/imgs/theme/icons/icon-cart.svg')}}">
         <span class="pro-count blue">{{$number}}</span>
     </a>

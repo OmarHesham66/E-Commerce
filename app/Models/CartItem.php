@@ -5,17 +5,19 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class CartItem extends Model
 {
     use HasFactory;
 
+    // protected $with = ['Options'];
     protected $table = 'cart_items';
     protected $fillable = [
+        'cart_id',
         'product_id',
-        'options_id',
+        'option_id',
         'quantity',
-        'users_cart_id',
     ];
     protected $hidden = [
         'created_at',
@@ -30,7 +32,7 @@ class CartItem extends Model
     }
     public function UserCarts()
     {
-        return $this->belongsTo(UserCart::class, 'users_cart_id');
+        return $this->belongsTo(UserCart::class, 'cart_id');
     }
     public function Product()
     {
@@ -38,6 +40,6 @@ class CartItem extends Model
     }
     public function Options()
     {
-        return $this->belongsTo(OptionsProduct::class, 'options_id');
+        return $this->belongsTo(OptionsProduct::class, 'option_id');
     }
 }

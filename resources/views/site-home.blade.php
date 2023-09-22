@@ -34,7 +34,9 @@
                                 <h2 class="animated fw-900">Fashion Trending</h2>
                                 <h1 class="animated fw-900 text-7">Great Collection</h1>
                                 <p class="animated">Save more with coupons & up to 20% off</p>
-                                <a class="animated btn btn-brush btn-brush-2" href="{{ route('fashion') }}"> Discover
+                                <a class="animated btn btn-brush btn-brush-2"
+                                    href="{{ route('get_shop',['fashion' => ['Men Fashion','Women Fashion']]) }}">
+                                    Discover
                                     Now
                                 </a>
                             </div>
@@ -123,7 +125,7 @@
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
                                             <img class="default-img"
                                                 src="{{ asset('assets/imgs/shop/product-1-1.jpg')}}" alt="">
                                             {{-- <img class="hover-img"
@@ -147,7 +149,8 @@
                                     <div class="product-category">
                                         <a href="shop.html">Clothing</a>
                                     </div>
-                                    <h2><a href="product-details.html">Colorful Pattern Shirts</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">Colorful Pattern
+                                            Shirts</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>90%</span>
@@ -169,7 +172,7 @@
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
                                             <img class="default-img"
                                                 src="{{ asset('assets/imgs/shop/product-2-1.jpg')}}" alt="">
                                             <img class="hover-img" src="{{ asset('assets/imgs/shop/product-2-2.jpg')}}"
@@ -192,7 +195,8 @@
                                     <div class="product-category">
                                         <a href="shop.html">Clothing</a>
                                     </div>
-                                    <h2><a href="product-details.html">Plain Color Pocket Shirts</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">Plain Color Pocket
+                                            Shirts</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>50%</span>
@@ -213,7 +217,7 @@
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
                                             <img class="default-img"
                                                 src="{{ asset('assets/imgs/shop/product-3-1.jpg')}}" alt="">
                                             <img class="hover-img" src="{{ asset('assets/imgs/shop/product-3-2.jpg')}}"
@@ -236,7 +240,8 @@
                                     <div class="product-category">
                                         <a href="shop.html">Shirts</a>
                                     </div>
-                                    <h2><a href="product-details.html">Vintage Floral Oil Shirts</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">Vintage Floral Oil
+                                            Shirts</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>95%</span>
@@ -257,7 +262,7 @@
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
                                             <img class="default-img"
                                                 src="{{ asset('assets/imgs/shop/product-4-1.jpg')}}" alt="">
                                             <img class="hover-img" src="{{ asset('assets/imgs/shop/product-4-2.jpg')}}"
@@ -280,7 +285,8 @@
                                     <div class="product-category">
                                         <a href="shop.html">Clothing</a>
                                     </div>
-                                    <h2><a href="product-details.html">Colorful Hawaiian Shirts</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">Colorful Hawaiian
+                                            Shirts</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>70%</span>
@@ -301,7 +307,7 @@
                             <div class="product-cart-wrap mb-xs-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
                                             <img class="default-img"
                                                 src="{{ asset('assets/imgs/shop/product-5-1.jpg')}}" alt="">
                                             <img class="hover-img" src="{{ asset('assets/imgs/shop/product-5-2.jpg')}}"
@@ -324,7 +330,8 @@
                                     <div class="product-category">
                                         <a href="shop.html">Shirt</a>
                                     </div>
-                                    <h2><a href="product-details.html">Flowers Sleeve Lapel Shirt</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">Flowers Sleeve Lapel
+                                            Shirt</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>70%</span>
@@ -345,7 +352,7 @@
                             <div class="product-cart-wrap mb-xs-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
                                             <img class="default-img"
                                                 src="{{ asset('assets/imgs/shop/product-6-1.jpg')}}" alt="">
                                             <img class="hover-img" src="{{ asset('assets/imgs/shop/product-6-2.jpg')}}"
@@ -368,7 +375,8 @@
                                     <div class="product-category">
                                         <a href="shop.html">Shirts</a>
                                     </div>
-                                    <h2><a href="product-details.html">Ethnic Floral Casual Shirts</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">Ethnic Floral Casual
+                                            Shirts</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>70%</span>
@@ -389,7 +397,7 @@
                             <div class="product-cart-wrap mb-xs-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
                                             <img class="default-img"
                                                 src="{{ asset('assets/imgs/shop/product-7-1.jpg')}}" alt="">
                                             <img class="hover-img" src="{{ asset('assets/imgs/shop/product-7-2.jpg')}}"
@@ -412,7 +420,8 @@
                                     <div class="product-category">
                                         <a href="shop.html">Shoes</a>
                                     </div>
-                                    <h2><a href="product-details.html">Stitching Hole Sandals</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">Stitching Hole
+                                            Sandals</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>98%</span>
@@ -432,7 +441,7 @@
                             <div class="product-cart-wrap">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
                                             <img class="default-img"
                                                 src="{{ asset('assets/imgs/shop/product-8-1.jpg')}}" alt="">
                                             <img class="hover-img" src="{{ asset('assets/imgs/shop/product-8-2.jpg')}}"
@@ -452,7 +461,8 @@
                                     <div class="product-category">
                                         <a href="shop.html">Shirt</a>
                                     </div>
-                                    <h2><a href="product-details.html">Mens Porcelain Shirt</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">Mens Porcelain
+                                            Shirt</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>70%</span>
@@ -481,9 +491,8 @@
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
-                                            <img class="default-img"
-                                                src="{{ asset('assets/imgs/shop-2/'.$product->photo)}}" alt="">
+                                        <a href="{{ route('get_details_product',$product->id) }}">
+                                            <img class="default-img" src="{{$product->photo }}" alt="">
                                             {{-- <img class="hover-img"
                                                 src="{{ asset('assets/imgs/shop/product-9-2.jpg')}}" alt=""> --}}
                                         </a>
@@ -503,9 +512,11 @@
                                 </div>
                                 <div class="product-content-wrap">
                                     <div class="product-category">
-                                        <a href="shop.html">{{ $product->name }} </a>
+                                        <a href="{{ route('get_details_product',$product->id) }}">{{ $product->name }}
+                                        </a>
                                     </div>
-                                    <h2><a href="product-details.html">{{ $product->description }}</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">{{
+                                            $product->description }}</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>90%</span>
@@ -534,9 +545,8 @@
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
-                                        <a href="product-details.html">
-                                            <img class="default-img"
-                                                src="{{ asset('assets/imgs/shop-2/'.$product->photo)}}"
+                                        <a href="{{ route('get_details_product',$product->id) }}">
+                                            <img class="default-img" src="{{$product->photo }}"
                                                 alt="{{ $product->name }}">
                                             {{-- <img class="hover-img"
                                                 src="{{ asset('assets/imgs/shop/product-2-2.jpg')}}" alt=""> --}}
@@ -556,9 +566,11 @@
                                 </div>
                                 <div class="product-content-wrap">
                                     <div class="product-category">
-                                        <a href="shop.html">{{ $product->name }}</a>
+                                        <a href="{{ route('get_details_product',$product->id) }}">{{ $product->name
+                                            }}</a>
                                     </div>
-                                    <h2><a href="product-details.html">{{ $product->description }}</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">{{
+                                            $product->description }}</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>90%</span>
@@ -607,11 +619,12 @@
                     @foreach ($categories as $category)
                     <div class="card-1">
                         <figure class=" img-hover-scale overflow-hidden">
-                            <a href="{{ route('get_shop_by_category',$category->id) }}"><img
+                            <a href="{{ route('get_shop',['category'=>$category->id]) }}"><img
                                     src="{{ asset('assets/imgs/category/'.$category->photo)}}" alt=""
                                     style="width:172px; height:200px;"></a>
                         </figure>
-                        <h5><a href="{{ route('get_shop_by_category',$category->id) }}">{{ $category->name }}</a></h5>
+                        <h5><a href="{{ route('get_shop',['category_id'=>$category->id]) }}">{{ $category->name }}</a>
+                        </h5>
                     </div>
                     @endforeach
                 </div>
@@ -628,7 +641,7 @@
                         <div class="banner-text">
                             <span>Smart Offer</span>
                             <h4>Save 20% on <br>T-Shirts</h4>
-                            <a href="{{ route('get_shop_by_category',2) }}">Shop Now <i
+                            <a href="{{ route('get_shop',['category_id'=>2]) }}">Shop Now <i
                                     class="fi-rs-arrow-right"></i></a>
                         </div>
                     </div>
@@ -639,7 +652,7 @@
                         <div class="banner-text">
                             <span>Sale off</span>
                             <h4>Great Summer <br>Collection</h4>
-                            <a href="{{ route('get_shop_by_summer') }}">Shop Now <i class="fi-rs-arrow-right"></i></a>
+                            <a href="{{ route('get_shop') }}">Shop Now <i class="fi-rs-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -649,7 +662,7 @@
                         <div class="banner-text">
                             <span>New Arrivals</span>
                             <h4>Shop Today’s <br>Deals & Offers</h4>
-                            <a href="{{ route('get_shop_by_discount') }}">Shop Now <i class="fi-rs-arrow-right"></i></a>
+                            <a href="{{ route('get_shop') }}">Shop Now <i class="fi-rs-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -667,9 +680,8 @@
                     <div class="product-cart-wrap small hover-up">
                         <div class="product-img-action-wrap">
                             <div class="product-img product-img-zoom">
-                                <a href="product-details.html">
-                                    <img class="default-img" src="{{ asset('assets/imgs/shop-2/' . $product->photo)}}"
-                                        alt="">
+                                <a href="{{ route('get_details_product',$product->id) }}">
+                                    <img class="default-img" src="{{ $product->photo }}" alt="">
                                     {{-- <img class="hover-img" src="{{ asset('assets/imgs/shop/product-2-2.jpg')}}"
                                         alt=""> --}}
                                 </a>
@@ -688,7 +700,7 @@
                             </div> --}}
                         </div>
                         <div class="product-content-wrap">
-                            <h2><a href="product-details.html">{{ $product->name }}</a></h2>
+                            <h2><a href="{{ route('get_details_product',$product->id) }}">{{ $product->name }}</a></h2>
                             <div class="rating-result" title="90%">
                                 <span>
                                 </span>

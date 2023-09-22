@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,17 +19,20 @@ class ProductFactory extends Factory
 
     public function definition(): array
     {
+        $faker = \Faker\Factory::create();
+        $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
         $titleCategory = ['Summer T-Shirt', 'Winter T-Shirt', 'Qamis'];
-
+        $name = $faker->productName;
         return [
-            'name' => fake()->name(),
+            'name' => $name,
+            'slug' => Str::slug($name),
             'title-category' => fake()->randomElement($titleCategory),
             'description' => fake()->text(100),
-            'photo' => 'Product-' . $this->counter++ . '.jpg',
+            'photo' => fake()->imageUrl(650, 650),
             'price' => fake()->numberBetween(100, 500),
             'avaliable' => 'Avaliable',
             'quantity' => fake()->numberBetween(5, 8),
-            'category_id' => 2,
+            'category_id' => 25,
         ];
     }
 }

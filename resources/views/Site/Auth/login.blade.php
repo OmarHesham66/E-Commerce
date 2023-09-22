@@ -7,7 +7,11 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" rel="nofollow">Home</a>
+                {{-- @auth --}}
+                <a href="{{ route('home-site') }}" rel="nofollow">Home</a>
+                {{-- @else --}}
+                {{-- <a href="{{ route('welcome') }}" rel="nofollow">Home</a> --}}
+                {{-- @endauth --}}
                 <span></span> Login
             </div>
         </div>
@@ -48,17 +52,17 @@
                                             {{$message}}
                                         </div>
                                         @enderror
-                                        {{-- <div class="login_footer form-group">
-                                            <div class="chek-form">
+                                        <div class="login_footer form-group">
+                                            {{-- <div class="chek-form">
                                                 <div class="custome-checkbox">
                                                     <input class="form-check-input" type="checkbox" name="checkbox"
                                                         id="exampleCheckbox1" value="">
                                                     <label class="form-check-label"
                                                         for="exampleCheckbox1"><span>Remember me</span></label>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <a class="text-muted" href="#">Forgot password?</a>
-                                        </div> --}}
+                                        </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-fill-out btn-block hover-up"
                                                 name="login">Log in</button>

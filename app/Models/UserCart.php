@@ -28,7 +28,7 @@ class UserCart extends Model
     }
     public function CartItems()
     {
-        return $this->hasMany(CartItem::class, 'users_cart_id');
+        return $this->hasMany(CartItem::class, 'cart_id');
     }
     public function Users()
     {
@@ -36,6 +36,11 @@ class UserCart extends Model
     }
     public function Products()
     {
-        return $this->belongsToMany(Product::class, 'cart_items', 'users_cart_id', 'product_id', 'id', 'id');
+        return $this->belongsToMany(Product::class, 'cart_items', 'cart_id', 'product_id', 'id', 'id')
+            ->withPivot([
+                'id',
+                'option_id',
+                'quantity',
+            ]);
     }
 }

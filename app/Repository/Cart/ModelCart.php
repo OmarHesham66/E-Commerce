@@ -6,8 +6,9 @@ use App\Models\CartItem;
 use App\Models\UserCart;
 use App\Traits\Get_Cookies;
 use App\Traits\UpdateQuantity;
-use App\Traits\UpdateQuantityProduct;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\UpdateQuantityProduct;
 
 
 class ModelCart
@@ -17,38 +18,49 @@ class ModelCart
     {
         $item =  UserCart::first();
         if (!$item) {
-            $cart = UserCart::create([
-                'cookie_id' => $this->get_cookie()
-            ]);
+            DB::beginTransaction();
+            try {
+                $cart = UserCart::create([
+                    'cookie_id' => $this->get_cookie()
+                ]);
+                CartItem::create([
+                    'option_id' => $option_id,
+                    'product_id' => $product_id,
+                    'cart_id' => $cart->id,
+                    'quantity' => $quantity,
+                ]);
+                // $this->down($option_id, $quantity);
+                DB::commit();
+            } catch (\Throwable $th) {
+                DB::rollBack();
+            }
+        } elseif (!$cart_items = $item->CartItems()->where('product_id', $product_id)->where('option_id', $option_id)->first()) {
             CartItem::create([
-                'options_id' => $option_id,
+                'option_id' => $option_id,
                 'product_id' => $product_id,
-                'users_cart_id' => $cart->id,
+                'cart_id' => $item->id,
                 'quantity' => $quantity,
             ]);
-            $this->down($option_id, $quantity);
-        } elseif (!$cart_items = $item->CartItems()->where('product_id', $product_id)->where('options_id', $option_id)->first()) {
-            CartItem::create([
-                'options_id' => $option_id,
-                'product_id' => $product_id,
-                'users_cart_id' => $item->id,
-                'quantity' => $quantity,
-            ]);
-            $this->down($option_id, $quantity);
+            // $this->down($option_id, $quantity);
         } else {
             $cart_items->increment('quantity', $quantity);
-            $this->down($option_id, $quantity);
+            // $this->down($option_id, $quantity);
         }
     }
-    public function update($quantity, $id)
+    public function updateUp($quantity, $id)
     {
         $cart_item = CartItem::where('id', $id)->first();
-        if ($cart_item->quantity > $quantity) {
-            $cart_item->update(['quantity' => $quantity]);
-            $this->up($cart_item->options_id, $quantity);
-        } else {
-            $cart_item->update(['quantity' => $quantity]);
-            $this->down($cart_item->options_id, $quantity);
+        $qty_in_option = $cart_item->Options->quantity;
+        if ($cart_item->quantity != $qty_in_option) {
+            $cart_item->update(['quantity' => $cart_item->quantity + $quantity]);
+        }
+    }
+    public function updateDown($quantity, $id)
+    {
+        $cart_item = CartItem::where('id', $id)->first();
+        $qty_in_option = $cart_item->Options->quantity;
+        if ($cart_item->quantity > 1) {
+            $cart_item->update(['quantity' => $cart_item->quantity - $quantity]);
         }
     }
     public function delete($id)
@@ -57,12 +69,12 @@ class ModelCart
     }
     public function empty()
     {
-        UserCart::truncate();
+        UserCart::where('cookie_id', $this->get_cookie())->delete();
     }
     public function ShowCart()
     {
         return UserCart::select('user_id', 'cookie_id', 'product_id', 'cart_items.quantity', 'name', 'price')
-            ->join('cart_items', 'cart_items.users_cart_id', '=', 'users_cart.id')
+            ->join('cart_items', 'cart_items.cart_id', '=', 'users_cart.id')
             ->join('products', 'products.id', '=', 'cart_items.product_id')
             ->get();
     }
@@ -70,7 +82,7 @@ class ModelCart
     public function total()
     {
         return UserCart::select('cart_items.quantity', 'price')
-            ->join('cart_items', 'cart_items.users_cart_id', '=', 'users_cart.id')
+            ->join('cart_items', 'cart_items.cart_id', '=', 'users_cart.id')
             ->join('products', 'products.id', '=', 'cart_items.product_id')->get()
             ->sum(function ($item) {
                 return $item->price * $item->quantity;

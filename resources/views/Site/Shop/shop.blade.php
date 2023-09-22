@@ -4,11 +4,11 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                @auth
+                {{-- @auth --}}
                 <a href="{{ route('home-site') }}" rel="nofollow">Home</a>
-                @else
-                <a href="{{ route('welcome') }}" rel="nofollow">Home</a>
-                @endauth
+                {{-- @else --}}
+                {{-- <a href="{{ route('welcome') }}" rel="nofollow">Home</a> --}}
+                {{-- @endauth --}}
                 <span></span> Shop
             </div>
         </div>

@@ -13,6 +13,8 @@ class OptionsProductComponent extends Component
     use Get_Cookies;
     public $colors, $sizes, $total, $quantity, $activeColor, $activeSize;
     public $selected_qty, $errorMassage = null, $product_id;
+    protected $listeners = ['newfresh' => 'update'];
+
     public function mount($product_id)
     {
         $this->product_id = $product_id;
@@ -22,7 +24,7 @@ class OptionsProductComponent extends Component
     }
     public function render()
     {
-        return view('livewire.options-product-component');
+        return view('livewire.ProductPage.options-product-component');
     }
     public function SizeByColor($size)
     {
@@ -66,7 +68,19 @@ class OptionsProductComponent extends Component
                 ->where('size', $this->activeSize)->first();
             $cart = new ModelCart();
             $cart->add($selected_option->id, $this->selected_qty, $this->product_id);
+            $this->emit('newfresh');
             $this->emit('incermentNumber');
         }
+    }
+
+    public function update()
+    {
+        $this->activeSize = null;
+        $this->activeColor = null;
+        $this->colors = null;
+        $this->quantity = $this->total;
+        $options = OptionsProduct::where('product_id', $this->product_id);
+        $this->sizes = array_unique($options->pluck('size')->toArray());
+        $this->total = $this->quantity = $options->sum('quantity');
     }
 }

@@ -4,7 +4,11 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                <a href="#" rel="nofollow">Home</a>
+                {{-- @auth --}}
+                <a href="{{ route('home-site') }}" rel="nofollow">Home</a>
+                {{-- @else --}}
+                {{-- <a href="{{ route('welcome') }}" rel="nofollow">Home</a> --}}
+                {{-- @endauth --}}
                 <span></span> {{ $product->Category->SuperCategory->name }}
                 <span></span> {{ $product->Category->name }}
             </div>
@@ -22,8 +26,7 @@
                                     <!-- MAIN SLIDES -->
                                     <div class="product-image-slider">
                                         <figure class="border-radius-10">
-                                            <img src="{{ asset('assets/imgs/shop-2/'.$product->photo)}}"
-                                                alt="product image">
+                                            <img src="{{$product->photo}}" alt="product image">
                                         </figure>
                                     </div>
                                     <!-- THUMBNAILS -->
@@ -68,7 +71,8 @@
                                     <h2 class="title-detail">{{ $product->name }}</h2>
                                     <div class="product-detail-rating">
                                         <div class="pro-details-brand">
-                                            {{-- <span> Brands: <a href="shop.html">Bootstrap</a></span> --}}
+                                            <span> Brands: <a
+                                                    href="{{ route('get_shop',['brand_id'=>$product->brand_id]) }}">Bootstrap</a></span>
                                         </div>
                                         <div class="product-rate-cover text-end">
                                             <div class="product-rate d-inline-block">
@@ -429,9 +433,7 @@
                                             <div class="product-img-action-wrap">
                                                 <div class="product-img product-img-zoom">
                                                     <a href="product-details.html" tabindex="0">
-                                                        <img class="default-img"
-                                                            src="{{ asset('assets/imgs/shop-2/'.$product->photo)}}"
-                                                            alt="">
+                                                        <img class="default-img" src="{{$product->photo}}" alt="">
                                                         {{-- <img class="hover-img"
                                                             src="{{ asset('assets/imgs/shop/product-2-2.jpg')}}" alt="">
                                                         --}}
