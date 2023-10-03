@@ -2,15 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use App\Repository\Cart\ModelCart;
-use App\Traits\Get_Cookies;
 use Livewire\Component;
+use App\Models\UserOrder;
+use App\Traits\Get_Cookies;
 use App\Models\OptionsProduct;
+use App\Repository\Cart\ModelCart;
+use App\Traits\PreviousOrder;
+use Illuminate\Support\Facades\Auth;
 
 
 class OptionsProductComponent extends Component
 {
-    use Get_Cookies;
+    use Get_Cookies, PreviousOrder;
     public $colors, $sizes, $total, $quantity, $activeColor, $activeSize;
     public $selected_qty, $errorMassage = null, $product_id;
     protected $listeners = ['newfresh' => 'update'];
@@ -55,6 +58,7 @@ class OptionsProductComponent extends Component
     }
     public function save()
     {
+        $this->check();
         if ($this->activeSize == null) {
             $this->errorMassage = 'Please Choose Size !!';
         } elseif ($this->activeColor == null) {

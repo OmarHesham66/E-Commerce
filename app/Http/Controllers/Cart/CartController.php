@@ -13,14 +13,7 @@ class CartController extends Controller
 {
     public function show()
     {
-        $cart = UserCart::first();
-        return view('Site.cart.cart', compact('cart'));
-    }
-    public function update(Request $request, CartItem $cartItem)
-    {
-        $request->validate([
-            'quantity' => 'integer'
-        ]);
+        return view('Site.cart.cart');
     }
     public function check_coupone()
     {

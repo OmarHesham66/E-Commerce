@@ -9,15 +9,15 @@
             @forelse ($cart as $item)
             <li>
                 <div class="shopping-cart-img">
-                    <a href="product-details.html"><img alt="Surfside Media"
+                    <a href="{{ route('get_details_product',$item->product_id) }}"><img alt="Surfside Media"
                             src="{{ asset('assets/imgs/shop/thumbnail-3.jpg')}}"></a>
                 </div>
                 <div class="shopping-cart-title">
-                    <h4><a href="product-details.html">{{ $item->name }}</a></h4>
+                    <h4><a href="{{ route('get_details_product',$item->product_id) }}">{{ $item->name }}</a></h4>
                     <h4><span>{{ $item->quantity }} × </span>${{ $item->price }}</h4>
                 </div>
                 <div class="shopping-cart-delete">
-                    <a href="#"><i class="fi-rs-cross-small"></i></a>
+                    <a><i class="fi-rs-cross-small"></i></a>
                 </div>
             </li>
             @empty
@@ -35,8 +35,8 @@
             </div>
             @endif
             <div class="shopping-cart-button">
-                <a href="cart.html" class="outline">View cart</a>
-                <a href="checkout.html">Checkout</a>
+                <a href="{{ route('show.cart') }}" class="outline">View cart</a>
+                <a href="{{ route('checkout.show') }}">Checkout</a>
             </div>
         </div>
     </div>

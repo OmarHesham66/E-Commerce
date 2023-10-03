@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css')}}">
     @yield('notifycss')
+
     @livewireStyles
 </head>
 
@@ -52,6 +53,7 @@
     <script src="{{ asset('assets/js/shop.js?v=3.3')}}"></script>
     <script src="{{ asset('assets/js/extra.js')}}"></script>
     @yield('notifyjs')
+
     @livewireScripts
 </body>
 

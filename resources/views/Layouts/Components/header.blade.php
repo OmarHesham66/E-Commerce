@@ -140,7 +140,8 @@
                                                             <li><span class="submenu-title">Hot & Trending</span>
                                                             </li>
                                                             @foreach ($super->Categories as $category)
-                                                            <li><a class="dropdown-item nav-link nav_item" href="#">
+                                                            <li><a class="dropdown-item nav-link nav_item"
+                                                                    href="{{ route('get_shop',['category'=>$category->id]) }}">
                                                                     {{$category->name}}</a></li>
                                                             @endforeach
                                                         </ul>
@@ -367,7 +368,7 @@
     <div class="mobile-header-wrapper-inner">
         <div class="mobile-header-top">
             <div class="mobile-header-logo">
-                <a href="index.html"><img src="{{ asset('assets/imgs/logo/logo.png')}}" alt="logo"></a>
+                <a href="{{ route('home-site') }}"><img src="{{ asset('assets/imgs/logo/logo.png')}}" alt="logo"></a>
             </div>
             <div class="mobile-menu-close close-style-wrap close-style-position-inherit">
                 <button class="close-style search-close">
@@ -478,7 +479,7 @@
                     <a href="{{ route('get_login') }}">Log In </a>
                 </div>
                 <div class="single-mobile-header-info">
-                    <a href="register.html">Sign Up</a>
+                    <a href="{{ route('get_register') }}">Sign Up</a>
                 </div>
                 <div class="single-mobile-header-info">
                     <a href="#">(+02) 0111-502-9466 </a>

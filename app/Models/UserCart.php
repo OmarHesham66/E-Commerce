@@ -30,13 +30,14 @@ class UserCart extends Model
     {
         return $this->hasMany(CartItem::class, 'cart_id');
     }
-    public function Users()
+    public function User()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
     public function Products()
     {
-        return $this->belongsToMany(Product::class, 'cart_items', 'cart_id', 'product_id', 'id', 'id')
+        return $this->belongsToMany(Product::class, 'cart_items', 'cart_id', 'product_id')
+            ->using(CartItem::class)
             ->withPivot([
                 'id',
                 'option_id',

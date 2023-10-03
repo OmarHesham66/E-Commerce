@@ -10,9 +10,10 @@
             </div>
         </div>
     </div>
-    @if($cart)
-    @livewire('qty-in-cart-page',['cart'=>$cart])
-    @else
+    @include('notify::components.notify')
+    {{-- @if($cart) --}}
+    @livewire('qty-in-cart-page')
+    {{-- @else
     <section class="mt-50 mb-50">
         <div class="container">
             <div class="row" style="margin-left:12em;font-size:3em;color:#F15412">
@@ -24,6 +25,6 @@
             </div>
         </div>
     </section>
-    @endif
+    @endif --}}
 </main>
 @endsection

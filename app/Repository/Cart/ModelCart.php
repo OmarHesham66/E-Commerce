@@ -3,6 +3,7 @@
 namespace App\Repository\Cart;
 
 use App\Models\CartItem;
+use App\Models\OptionsProduct;
 use App\Models\UserCart;
 use App\Traits\Get_Cookies;
 use App\Traits\UpdateQuantity;
@@ -41,10 +42,14 @@ class ModelCart
                 'cart_id' => $item->id,
                 'quantity' => $quantity,
             ]);
-            // $this->down($option_id, $quantity);
         } else {
-            $cart_items->increment('quantity', $quantity);
-            // $this->down($option_id, $quantity);
+            $qty_option = OptionsProduct::find($option_id)->quantity;
+            // dd($qty_option);
+            if ($cart_items->quantity + $quantity > $qty_option) {
+                $cart_items->update(['quantity' => $qty_option]);
+            } else {
+                $cart_items->increment('quantity', $quantity);
+            }
         }
     }
     public function updateUp($quantity, $id)
@@ -58,7 +63,7 @@ class ModelCart
     public function updateDown($quantity, $id)
     {
         $cart_item = CartItem::where('id', $id)->first();
-        $qty_in_option = $cart_item->Options->quantity;
+        // $qty_in_option = $cart_item->Options->quantity;
         if ($cart_item->quantity > 1) {
             $cart_item->update(['quantity' => $cart_item->quantity - $quantity]);
         }
@@ -67,13 +72,16 @@ class ModelCart
     {
         CartItem::where('id', $id)->delete();
     }
-    public function empty()
+    public function empty($id = null)
     {
+        if ($id != null) {
+            UserCart::where('user_id', $id)->delete();
+        }
         UserCart::where('cookie_id', $this->get_cookie())->delete();
     }
     public function ShowCart()
     {
-        return UserCart::select('user_id', 'cookie_id', 'product_id', 'cart_items.quantity', 'name', 'price')
+        return UserCart::select('user_id', 'cookie_id', 'product_id', 'cart_items.quantity', 'name', 'price', 'option_id')
             ->join('cart_items', 'cart_items.cart_id', '=', 'users_cart.id')
             ->join('products', 'products.id', '=', 'cart_items.product_id')
             ->get();

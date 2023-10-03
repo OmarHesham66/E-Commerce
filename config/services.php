@@ -30,5 +30,15 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'stripe' => [
+        'p_key' => env('STRIPE_P_KEY'),
+        's_key' => env('STRIPE_S_KEY'),
+    ],
+    'my_fatorah' => [
+        'base_api' => env('MYFATORAH_BASE_API'),
+        'token' => env('MYFATORAH_TOKEN'),
+        'callback' => env('MYFATORAH_CALLBACK'),
+        'error' => env('MYFATORAH_ERROR'),
+    ],
 
 ];

@@ -11,6 +11,9 @@ trait UpdateQuantityProduct
     {
         $option = OptionsProduct::where('id', $option_id)->first();
         $new_qty = $option->quantity - $qty;
+        if ($new_qty == 0) {
+            $option->delete();
+        }
         $option->update(['quantity' => $new_qty]);
     }
     public function up($option_id, $qty)

@@ -21,7 +21,7 @@ class SuperCategory extends Model
     ];
     public function Categories()
     {
-        return $this->hasMany(Category::class, 'super_categories_id');
+        return $this->hasMany(Category::class, 'main_category_id');
     }
 
     public function Products()

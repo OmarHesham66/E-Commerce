@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\User;
+use App\Models\UserCart;
+use App\Traits\Save_photos;
 use App\Http\Requests\FormLogin;
 use App\Http\Requests\FormRegister;
 use App\Http\Controllers\Controller;
-use App\Traits\Save_photos;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 
 class AuthController extends Controller
@@ -29,6 +31,10 @@ class AuthController extends Controller
             // } else {
             //     return redirect()->route('dash_admin');
             // }
+            $cookie_id = Cookie::get('cart_id');
+            if ($cookie_id) {
+                UserCart::first()->update(['user_id' => Auth::id()]);
+            }
             return redirect()->route('home-site');
         }
     }

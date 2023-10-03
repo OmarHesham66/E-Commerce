@@ -1,5 +1,8 @@
 @extends('Layouts.app')
 @section('content')
+@section('notifycss')
+@notifyCss
+@endsection
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
@@ -16,6 +19,7 @@
     <section class="mt-50 mb-50">
         <div class="container">
             <div class="row">
+                @include('notify::components.notify')
                 <div class="col-lg-9">
                     <div class="shop-product-fillter">
                         <div class="totall-product">
@@ -256,4 +260,7 @@
         </div>
     </section>
 </main>
+@endsection
+@section('notifyjs')
+@notifyJs
 @endsection

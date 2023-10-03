@@ -1,3 +1,4 @@
+@if($cart)
 <section class="mt-50 mb-50">
     <div class="container">
         <div class="row">
@@ -29,10 +30,10 @@
                                 <td class="price" data-title="Price"><span>${{ $item->price }}</span></td>
                                 <td class="text-center" data-title="Stock">
                                     <div class="detail-qty border radius  m-auto">
-                                        <a wire:click='updateUp("{{ $item->pivot->id }}")' class="qty-down"><i
+                                        <a wire:click='updateDown("{{ $item->pivot->id }}")' class="qty-down"><i
                                                 class="fi-rs-angle-small-down"></i></a>
                                         <span class="qty-val">{{ $item->pivot->quantity }}</span>
-                                        <a wire:click='updateDown("{{ $item->pivot->id }}")' class="qty-up"><i
+                                        <a wire:click='updateUp("{{ $item->pivot->id }}")' class="qty-up"><i
                                                 class="fi-rs-angle-small-up"></i></a>
                                     </div>
                                 </td>
@@ -123,3 +124,16 @@
         </div>
     </div>
 </section>
+@else
+<section class="mt-50 mb-50">
+    <div class="container">
+        <div class="row" style="margin-left:12em;font-size:3em;color:#F15412">
+            No Item Yet!!
+        </div>
+        <div class="cart-action text-end">
+            <a href="{{ route('get_shop') }}" class="btn "><i class="fi-rs-shopping-bag mr-10"></i>Continue
+                Shopping</a>
+        </div>
+    </div>
+</section>
+@endif

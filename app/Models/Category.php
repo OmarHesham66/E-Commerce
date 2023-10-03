@@ -14,7 +14,7 @@ class Category extends Model
         'description',
         'photo',
         // 'count_brand',
-        'super_categories_id',
+        'main_category_id',
     ];
     protected $hidden = [
         'created_at',
@@ -22,7 +22,7 @@ class Category extends Model
     ];
     public function SuperCategory()
     {
-        return $this->belongsTo(SuperCategory::class, 'super_categories_id');
+        return $this->belongsTo(SuperCategory::class, 'main_category_id');
     }
     public function Products()
     {

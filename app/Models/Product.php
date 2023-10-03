@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Brand;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
@@ -12,9 +13,10 @@ class Product extends Model
     use HasFactory;
     protected $table = 'products';
     protected $fillable = [
-        'name	',
-        'title',
-        'description',
+        'name',
+        'title-category',
+        'slug',
+        'describtion',
         'photo',
         'rating',
         'price',
@@ -28,6 +30,13 @@ class Product extends Model
         'created_at',
         'updated_at',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function (Product $product) {
+            $product->slug = Str::slug($product->name);
+        });
+    }
     public function Brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');

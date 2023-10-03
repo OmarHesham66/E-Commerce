@@ -1,7 +1,4 @@
 ﻿@extends('Layouts.app')
-@section('notifycss')
-@notifyCss
-@endsection
 @section('content')
 <main class="main">
     <div class="page-header breadcrumb-wrap">
@@ -81,7 +78,4 @@
         </div>
     </section>
 </main>
-@endsection
-@section('notifyjs')
-@notifyJs
 @endsection

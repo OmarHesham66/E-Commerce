@@ -1,14 +1,19 @@
 <?php
 
+use App\Models\Coupone;
+use App\Models\Invoice;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\UserCart;
+use App\Models\UserOrder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Shop\ShopController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\CheckOut\CheckoutController;
 
@@ -52,12 +57,16 @@ Route::controller(CartController::class)->prefix('cart')->group(function () {
 });
 Route::controller(CheckoutController::class)->prefix('checkout')->group(function () {
     Route::get('/show', 'show')->name('checkout.show');
+    Route::post('/create', 'create')->name('create.checkout')->middleware('auth:web');
+});
+Route::controller(PaymentController::class)->prefix('payment')->group(function () {
+    // Route::post('/{order}/show', 'show')->name('payment.show')->middleware('auth:web');
+    Route::get('/callback', 'callback')->name('payment.callback');
+    Route::get('/failed', 'failed')->name('payment.failed');
 });
 Route::get('/pop', function () {
-    $cart = UserCart::first();
-    // $cartItem = $cart->Products;
-    // return $cart->Products[0]->pivot;
-    // $options = $cart->CartItems()->with('Options')->get();
-    // return $cart;
-    return $cart->Products[0];
+    // $order->withCount('Products')->first()->products_count == UserCart::withCount('Products')->first()->products_count;
+    // $order->Products->pivot->pluck('quantity')->toArray()
+    // return  UserOrder::where('user_id', Auth::id())->where('payment_status', '!=', "Success")->first()->Products()->CartItem(;
+    // return now()->addHours(3);
 });

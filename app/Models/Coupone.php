@@ -10,7 +10,7 @@ class Coupone extends Model
     use HasFactory;
     protected $table = 'coupones';
     protected $fillable = [
-        'name	',
+        'name',
         'detiles',
         'code',
         'discount',
