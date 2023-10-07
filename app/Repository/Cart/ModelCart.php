@@ -21,9 +21,16 @@ class ModelCart
         if (!$item) {
             DB::beginTransaction();
             try {
-                $cart = UserCart::create([
-                    'cookie_id' => $this->get_cookie()
-                ]);
+                if (Auth::check()) {
+                    $cart = UserCart::create([
+                        'cookie_id' => $this->get_cookie(),
+                        'user_id' => Auth::id()
+                    ]);
+                } else {
+                    $cart = UserCart::create([
+                        'cookie_id' => $this->get_cookie(),
+                    ]);
+                }
                 CartItem::create([
                     'option_id' => $option_id,
                     'product_id' => $product_id,

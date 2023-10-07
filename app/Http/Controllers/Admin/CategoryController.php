@@ -16,9 +16,13 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-
+    public function __construct()
+    {
+        $this->authorizeResource(Category::class, 'category');
+    }
     public function index()
     {
+
         $categories = Category::with('SuperCategory')->get();
         return view('Admin.Categories.category', compact('categories'));
     }
@@ -37,19 +41,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->file('Photo')->getClientOriginalExtension());
-        Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required|max:150',
             'main_category_id' => 'required',
             'photo' => 'required|image',
-        ], [
-            '*.required' => 'The :attribute Is Requried',
-            // 'Name.max' => 'The :attribute So Long'
-        ])->validate();
+        ]);
         $data = $request->except('photo');
         $photo = $request->file('photo');
         $data['photo'] = $this->save_photo('category_photos', $photo);
-        // dd($data);
         Category::create($data);
         notify()->success('Created Category Success !!', 'Creatation');
         return redirect()->route('category.index');
@@ -77,15 +76,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        // dd($request->all());
-        Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required|max:150',
             'main_category_id' => 'required',
             'photo' => 'required|image',
-        ], [
-            '*.required' => 'The :attribute Is Requried',
-            // 'Name.max' => 'The :attribute So Long'
-        ])->validate();
+        ]);
         if ($request->has('photo')) {
             $data = $request->except('photo');
             $new_photo = $request->file('photo');

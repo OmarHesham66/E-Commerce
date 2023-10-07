@@ -6,7 +6,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <a href="{{ route('product.create') }}" class="btn  btn-outline-success"
+            <a href="{{ route('option.create.1',$product->id) }}" class="btn  btn-outline-success"
                 style="margin: 0 0 15px 5px; font-size:1.4em">Create</a>
             <table class="table">
                 <thead class="table-dark">
@@ -60,13 +60,14 @@
                             <th>{{ $option->size }}</th>
                             <th>{{ $option->quantity }}</th>
                             <td>
-                                <a href="{{ route('product.edit',$option->id) }}"
+                                <a href="{{ route('option.edit.1',[$option->id,$product->id]) }}"
                                     class="btn btn-sm btn-outline-success">Edit</a>
                             </td>
                             <td>
-                                <form action="{{ route('product.destroy',$option->id) }}" method="POST">
+                                <form action="{{ route('option.destroy',$option->id) }}" method="POST">
                                     @method('delete')
                                     @csrf
+                                    <input type="hidden" name="product_id" value="{{$product->id }}">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                                 </form>
                             </td>

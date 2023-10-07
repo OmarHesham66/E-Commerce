@@ -22,7 +22,7 @@ class UserCart extends Model
 
     public static function booted()
     {
-        static::addGlobalScope(function (Builder $builder) {
+        static::addGlobalScope('cookie', function (Builder $builder) {
             $builder->where('cookie_id', Get_Cookies::get_cookie());
         });
     }

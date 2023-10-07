@@ -181,10 +181,10 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
-
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         'Money' => 'App\Classes\Money',
+        'Crypt' => 'Illuminate\Support\Facades\Crypt',
     ])->toArray(),
 
 ];

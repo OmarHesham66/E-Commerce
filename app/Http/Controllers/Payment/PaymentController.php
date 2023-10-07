@@ -23,7 +23,6 @@ class PaymentController extends Controller
         $invoice = Invoice::where('invoice_id', $response['Data']['InvoiceId'])->first();
         if ($invoice && $invoice->invoice_id == $response['Data']['InvoiceId']) {
             $order = UserOrder::where('order_number', $invoice['order_number']);
-
             $order->update(['payment_status' => 'Paid']);
             Cart::empty($invoice->user_id);
             foreach ($order->first()->OrderItems as $item) {

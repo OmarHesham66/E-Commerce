@@ -10,7 +10,7 @@ class Payment extends Model
     use HasFactory;
     protected $table = 'payments';
     protected $fillable = [
-        'users_order_id	',
+        'order_id',
         'user_id',
         'status',
         'payment_method',
@@ -20,9 +20,9 @@ class Payment extends Model
         'created_at',
         'updated_at',
     ];
-    public function UserOrders()
+    public function UserOrder()
     {
-        return $this->belongsTo(UserOrder::class, 'users_order_id');
+        return $this->belongsTo(UserOrder::class, 'order_id');
     }
     public function User()
     {

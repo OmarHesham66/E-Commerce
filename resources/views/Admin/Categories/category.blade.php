@@ -6,8 +6,10 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
+            @can('create','App\\Models\Category')
             <a href="{{ route('category.create') }}" class="btn  btn-outline-success"
                 style="margin: 0 0 15px 5px; font-size:1.4em">Create</a>
+            @endcan
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
@@ -25,14 +27,20 @@
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->SuperCategory->name }}</td>
                         <td>{{ $category->created_at }}</td>
-                        <td><a href="{{ route('category.edit',$category->id) }}"
-                                class="btn btn-sm btn-outline-success">Edit</a></td>
                         <td>
+                            @can('update','App\\Models\Category')
+                            <a href="{{ route('category.edit',$category->id) }}"
+                                class="btn btn-sm btn-outline-success">Edit</a>
+                            @endcan
+                        </td>
+                        <td>
+                            @can('delete','App\\Models\Category')
                             <form action="{{ route('category.destroy',$category->id) }}" method="POST">
                                 @method('delete')
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach

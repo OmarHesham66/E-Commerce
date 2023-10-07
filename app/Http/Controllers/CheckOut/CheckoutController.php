@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\Models\UserCart;
+use App\Traits\CheckingOrder;
+use App\Traits\PaymentProcess;
 use App\Http\Requests\FormAddress;
 use App\Repository\Cart\ModelCart;
 use App\Http\Controllers\Controller;
-use App\Traits\PaymentProcess;
+use Illuminate\Support\Facades\Auth;
 use App\Repository\Checkout\OperationsOrder;
-use App\Traits\CheckingOrder;
 
 class CheckoutController extends Controller
 {
@@ -30,8 +31,8 @@ class CheckoutController extends Controller
     }
     public function create(FormAddress $request)
     {
-
         $o = new OperationsOrder();
+        UserCart::first()->update(['user_id' => Auth::id()]);
         $order = $o->create($request);
         $response = $this->process($order);
         return redirect($response['Data']['InvoiceURL']);

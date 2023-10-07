@@ -11,6 +11,7 @@ class OptionsProduct extends Model
     protected $table = 'options_product';
     protected $fillable = [
         'color',
+        'hexa',
         'size',
         'quantity',
         'product_id',

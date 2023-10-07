@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Role;
+use App\Models\Admin;
 use App\Models\Coupone;
 use App\Models\Invoice;
 use App\Models\Product;
@@ -65,8 +67,7 @@ Route::controller(PaymentController::class)->prefix('payment')->group(function (
     Route::get('/failed', 'failed')->name('payment.failed');
 });
 Route::get('/pop', function () {
-    // $order->withCount('Products')->first()->products_count == UserCart::withCount('Products')->first()->products_count;
-    // $order->Products->pivot->pluck('quantity')->toArray()
-    // return  UserOrder::where('user_id', Auth::id())->where('payment_status', '!=', "Success")->first()->Products()->CartItem(;
-    // return now()->addHours(3);
+    return Admin::find(1)->role()->whereHas('permissions', function ($q) {
+        $q->where('name', 'categry.view')->where('type', 'allow');
+    })->exists();
 });

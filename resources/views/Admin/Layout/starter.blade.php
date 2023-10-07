@@ -23,6 +23,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-mini">
   <div class="wrapper">
+    {{-- @includeFirst() --}}
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       @include('notify::components.notify')
@@ -202,7 +203,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
+              with font-awesome or any other icon font library -->
+            @if(Auth::user()->can('viewAny','App\\Models\Category')||Auth::user()->can('viewAny','App\\Models\SuperCategory'))
             <li class="nav-item">
               <a class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -212,20 +214,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
               <ul class="nav nav-treeview">
+                @can('viewAny', 'App\\Models\SuperCategory')
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Main-Category</p>
                   </a>
                 </li>
+                @endcan
+                @can('viewAny','App\\Models\Category')
                 <li class="nav-item">
                   <a href="{{ route('category.index') }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Category</p>
                   </a>
                 </li>
+                @endcan
               </ul>
             </li>
+            @endif
+            @can('viewAny', 'App\\Models\Product')
             <li class="nav-item">
               <a href="{{ route('product.index') }}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
@@ -234,30 +242,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+            @endcan
+            @can('viewAny','App\\Models\UserOrder')
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-th"></i>
+              <a href="{{ route('order.index') }}" class="nav-link">
+                <i class="fa-solid fa-receipt"></i>
                 <p>
                   Orders
                 </p>
               </a>
             </li>
+            @endcan
+            @can('viewAny','App\\Models\Payment')
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{ route('invoice.index') }}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Invoices
                 </p>
               </a>
             </li>
+            @endcan
+            @can('viewAny','App\\Models\Permission')
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{ route('permission.index') }}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Premisions
                 </p>
               </a>
             </li>
+            @endcan
+            @can('viewAny', 'App\\Models\Coupone')
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
@@ -266,6 +282,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </p>
               </a>
             </li>
+            @endcan
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -324,7 +341,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-  <script src="{{ asset('dist/js/photo.js') }}"></script>
+  <script type="text/javascript" src="http://chir.ag/projects/ntc/ntc.js"></script>
+  @stack('js')
   @yield('notifyjs')
   @notifyJs
 </body>

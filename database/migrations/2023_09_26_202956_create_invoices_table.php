@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('invoice_id')->unique();
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->nullOnDelete();
+            $table->foreignId('order_number')->nullable()->references('order_number')->on('users_order')->nullOnDelete();
             $table->timestamps();
         });
     }

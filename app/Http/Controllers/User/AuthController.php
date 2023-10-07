@@ -22,21 +22,13 @@ class AuthController extends Controller
 
     public function post_login(FormLogin $req)
     {
-        $checker = Auth::guard('web')->attempt(['email' => $req->email, 'password' => $req->password]);
-        if (!$checker) {
-            return view('Site.Auth.login')->with('failed_login', 'The Email or Password Wrong !');
-        } else {
-            // if (auth()->user()->role == 'user') {
-            //     return redirect()->route('dash_user');
-            // } else {
-            //     return redirect()->route('dash_admin');
-            // }
-            $cookie_id = Cookie::get('cart_id');
-            if ($cookie_id) {
-                UserCart::first()->update(['user_id' => Auth::id()]);
-            }
-            return redirect()->route('home-site');
-        }
+        $checker_user = Auth::guard('web')->attempt(['email' => $req->email, 'password' => $req->password]);
+        $checker_admin = Auth::guard('admin')->attempt(['email' => $req->email, 'password' => $req->password]);
+        // if (!$checker_user || !$checker_admin) {
+        //     return view('Site.Auth.login')->with('failed_login', 'The Email or Password Wrong !');
+        // }
+        return ($checker_admin) ? redirect()->route('hello-admin') : (($checker_user) ? redirect()->route('home-site') : view('Site.Auth.login')->with('failed_login', 'The Email or Password Wrong !'));
+        //     return ($checker_admin) ? redirect()->route('hello-admin') : redirect()->route('home-site');
     }
     public function get_register()
     {

@@ -30,7 +30,7 @@ class CartItem extends Pivot
             $cart->id = Str::uuid();
         });
     }
-    public function UserCarts()
+    public function UserCart()
     {
         return $this->belongsTo(UserCart::class, 'cart_id');
     }
@@ -38,7 +38,7 @@ class CartItem extends Pivot
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
-    public function Options()
+    public function Option()
     {
         return $this->belongsTo(OptionsProduct::class, 'option_id');
     }

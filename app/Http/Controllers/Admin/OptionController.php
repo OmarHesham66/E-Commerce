@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\OptionsProduct;
+use App\Http\Controllers\Controller;
 
 class OptionController extends Controller
 {
@@ -18,9 +20,9 @@ class OptionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Product $product)
     {
-        //
+        return view('Admin.Product.Crud-Options.create', compact('product'));
     }
 
     /**
@@ -28,7 +30,14 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'color' => 'required',
+            'size' => 'required',
+            'quantity' => 'required|integer'
+        ]);
+        OptionsProduct::create($request->all());
+        notify()->success('Created Option Success !!', 'Creatation');
+        return redirect()->route('product.show', $request->post('product_id'));
     }
 
     /**
@@ -42,24 +51,34 @@ class OptionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(OptionsProduct $option, Product $product)
     {
-        //
+        return view('Admin.Product.Crud-Options.edit', compact('option', 'product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, OptionsProduct $option)
     {
-        //
+        $request->validate([
+            'hexa' => 'required',
+            'size' => 'required',
+            'qty' => 'required|integer'
+        ]);
+        // dd($request->all());
+        $option->update($request->all());
+        notify()->success('Updated Option Success !!', 'Updating');
+        return redirect()->route('product.show', $request->post('product_id'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(OptionsProduct $option, Request $request)
     {
-        //
+        $option->delete();
+        notify()->success('Deleted Option Success !!', 'Deleting');
+        return redirect()->route('product.show', $request->post('product_id'));
     }
 }

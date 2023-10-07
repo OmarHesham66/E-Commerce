@@ -40,7 +40,7 @@ class OptionsProductComponent extends Component
             $this->activeSize = $size;
             $this->activeColor = null;
             $options = OptionsProduct::where('product_id', $this->product_id);
-            $this->colors = $options->where('size', $size)->pluck('color')->toArray();
+            $this->colors = $options->where('size', $size)->pluck('hexa')->toArray();
             $this->quantity = $options->where('size', $size)->sum('quantity');
             // dd($this->quantity);
         }
@@ -52,13 +52,12 @@ class OptionsProductComponent extends Component
             $this->activeColor = null;
             $this->quantity = $options->where('size', $this->activeSize)->sum('quantity');
         } else {
-            $this->quantity = $options->where('size', $this->activeSize)->where('color', $color)->sum('quantity');
+            $this->quantity = $options->where('size', $this->activeSize)->where('hexa', $color)->sum('quantity');
             $this->activeColor = $color;
         }
     }
     public function save()
     {
-        $this->check();
         if ($this->activeSize == null) {
             $this->errorMassage = 'Please Choose Size !!';
         } elseif ($this->activeColor == null) {
@@ -68,10 +67,11 @@ class OptionsProductComponent extends Component
                 $this->selected_qty = 1;
             }
             $selected_option = OptionsProduct::where('product_id', $this->product_id)
-                ->where('color', $this->activeColor)
+                ->where('hexa', $this->activeColor)
                 ->where('size', $this->activeSize)->first();
             $cart = new ModelCart();
             $cart->add($selected_option->id, $this->selected_qty, $this->product_id);
+            $this->check();
             $this->emit('newfresh');
             $this->emit('incermentNumber');
         }

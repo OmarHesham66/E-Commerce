@@ -37,7 +37,13 @@
                                                 class="fi-rs-angle-small-up"></i></a>
                                     </div>
                                 </td>
-                                <td class="price" data-title="Price"><span>{{ $options[$key]->Options->color }}</span>
+                                <td class="price" data-title="Price">
+                                    <ul class="list-filter color-filter">
+                                        <li><a>
+                                                <span style=" background: {{ $options[$key]->Options->color
+                                                }}"></span></a>
+                                        </li>
+                                    </ul>
                                 </td>
                                 <td class="text-right" data-title="Cart">
                                     <span>${{ $item->price * $item->pivot->quantity }}</span>

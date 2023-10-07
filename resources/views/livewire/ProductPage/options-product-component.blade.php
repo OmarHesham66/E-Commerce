@@ -7,18 +7,18 @@
             @foreach ($colors as $color)
             @if ($color == $activeColor)
             <li wire:click="ColorBySize('{{ $color }}')" class="active"><a href="#" data-color="{{ $color }}">
-                    <span class="product-color-{{ $color }}"></span></a>
+                    <span style="background: {{ $color }}"></span></a>
             </li>
             @else
-            <li wire:click="ColorBySize('{{ $color }}')" class=><a href="#" data-color="{{ $color }}">
-                    <span class="product-color-{{ $color }}"></span></a>
+            <li wire:click="ColorBySize('{{ $color }}')"><a href="#" data-color="{{ $color }}">
+                    <span style="background: {{ $color }}"></span></a>
             </li>
             @endif
             @endforeach
         </ul>
     </div>
     @endisset
-    <div class="attr-detail attr-size">
+    <div class=" attr-detail attr-size">
         <strong class="mr-10">Size</strong>
         <ul class="list-filter size-filter font-small">
             @foreach ($sizes as $size)
@@ -56,3 +56,6 @@
         <li>Availability:<span class="in-stock text-success ml-5">{{$total}} Items In Stock</span></li>
     </ul>
 </form>
+<script>
+    colo
+</script>

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FormProduct;
+use App\Services\ColorService;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -18,6 +19,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'product');
+    }
     public function index()
     {
         $products = Product::with('Category', 'Options')->get();
@@ -44,16 +49,15 @@ class ProductController extends Controller
         }
         try {
             DB::beginTransaction();
-            $data = $request->except('photo');
-            $photo = $request->file('photo');
-            $data['photo'] = $this->save_photo('product_photos', $photo);
-            $options = array_merge($request->post('option')['color'], $request->post('option')['qty'], $request->post('option')['size']);
-            $options = array_chunk($options, 3);
-            $data['quantity'] = array_sum($request->post('option')['qty']);
-            $product = Product::create($data);
-            foreach ($options as $option) {
+            $color_service = new ColorService();
+            $colors = $color_service->get_name($request->post('option'));
+            $options = array_chunk($request->post('option'), 3);
+            // dd($options, $colors, $request->post('option'));
+            $product = Product::create($this->get_data($request));
+            foreach ($options as $key => $option) {
                 OptionsProduct::create([
-                    'color' => $option[0],
+                    'hexa' => $option[0],
+                    'color' => $colors[$key],
                     'quantity' => $option[1],
                     'size' => $option[2],
                     'product_id' => $product->id
@@ -123,9 +127,21 @@ class ProductController extends Controller
         if (!$request->has('option')) {
             notify()->error('Options Of Product Is Required', 'ERROR');
             return redirect()->back()->withInput();
-        } elseif (in_array(null, $request->post('option')['size']) || in_array(null, $request->post('option')['qty'])) {
+        } elseif (in_array(null, $request->post('option'))) {
             notify()->error('Options Of Product Is Incorrect', 'ERROR');
             return redirect()->back()->withInput();
         }
+    }
+    public function get_data(Request $request)
+    {
+        $data = $request->except('photo');
+        $photo = $request->file('photo');
+        $data['photo'] = $this->save_photo('product_photos', $photo);
+        $sum = 0;
+        for ($i = 1; $i < count($request->post('option')); $i = $i + 3) {
+            $sum = $sum + $request->post('option')[$i];
+        }
+        $data['quantity'] = $sum;
+        return $data;
     }
 }

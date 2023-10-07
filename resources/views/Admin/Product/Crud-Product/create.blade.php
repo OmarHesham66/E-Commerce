@@ -121,6 +121,8 @@
 @endsection
 <script>
     let c = "{{ old('counter') ?? 0}}";
-    let a ="{{ old('option.color.0') }}"
-    console.log(a);
 </script>
+@push('js')
+<script src="{{ asset('dist/js/AutoCreateOption.js') }}"></script>
+
+@endpush
