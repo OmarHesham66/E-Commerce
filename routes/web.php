@@ -38,7 +38,7 @@ Route::group(['namespace' => 'User', 'middleware' => 'auth:web,admin'], function
 });
 /////////////////////////////////////////SHOP/////////////////////////////////////////////
 Route::controller(ShopController::class)->group(function () {
-    Route::get('/shop/{data?}', 'get_shop')->name('get_shop');
+    Route::any('/shop/{data?}', 'get_shop')->name('get_shop');
 });
 /////////////////////////////////////////PRODUCT-DETIALS///////////////////////////////////////////////////////////
 Route::get('/product-details/{id}', [ProductController::class, 'get_details_product'])->name('get_details_product');

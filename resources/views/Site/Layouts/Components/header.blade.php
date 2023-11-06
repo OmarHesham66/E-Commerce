@@ -74,7 +74,7 @@
                 </div>
                 <div class="header-right">
                     <div class="search-style-1">
-                        <form action="{{ route('get_shop') }}" method="POST">
+                        <form action="{{ route('get_shop') }}" method="post">
                             @csrf
                             <input type="text" name="text" placeholder="Search for items...">
                         </form>

@@ -12,7 +12,10 @@ class ShopController extends Controller
 {
     public function get_shop(Request $request)
     {
-        $filter = (count($request->query()) ? $request->query() : ($request->post('text') ?? []));
+        $search = [
+            'search' => request()->post('text') ?? null
+        ];
+        $filter = count($request->query()) > 0 ? $request->query() : $search;
         $products = Product::filter($filter)->paginate(PAGINATE);
         return view('Site.Shop.shop', compact('products'));
     }

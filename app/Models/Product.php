@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Brand;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -88,6 +89,7 @@ class Product extends Model
             return $builder->select('products.*', 'categories.name')
                 ->join('categories', 'categories.id', '=', 'products.category_id')
                 ->where('categories.name', 'LIKE', '%' . $value . '%');
+            // ->orwhere(DB::raw('products.id any (select id from prodoucts)'));
         });
     }
 }
