@@ -26,13 +26,13 @@ class ProductFactory extends Factory
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            'title-category' => fake()->randomElement($titleCategory),
-            'description' => fake()->text(100),
-            'photo' => fake()->imageUrl(650, 650),
+            // 'title-category' => fake()->randomElement($titleCategory),
+            'describtion' => fake()->text(100),
+            'photo' => fake()->imageUrl(650, 650, 'Hoodies', true, "Hoodies-" . $this->counter++, false, 'png'),
             'price' => fake()->numberBetween(100, 500),
             'avaliable' => 'Avaliable',
             'quantity' => fake()->numberBetween(5, 8),
-            'category_id' => 25,
+            'category_id' => 30,
         ];
     }
 }

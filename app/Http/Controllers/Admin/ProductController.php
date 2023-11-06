@@ -44,15 +44,14 @@ class ProductController extends Controller
      */
     public function store(FormProduct $request)
     {
+        // dd($request->all());
         if ($this->validate_option($request)) {
             return $this->validate_option($request);
         }
         try {
             DB::beginTransaction();
-            $color_service = new ColorService();
-            $colors = $color_service->get_name($request->post('option'));
+            $colors = (new ColorService())->get_name($request->post('option'));
             $options = array_chunk($request->post('option'), 3);
-            // dd($options, $colors, $request->post('option'));
             $product = Product::create($this->get_data($request));
             foreach ($options as $key => $option) {
                 OptionsProduct::create([
@@ -78,7 +77,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product = $product->load('Options');
-        return view('Admin.Product.Crud-Product.showOption', compact('product'));
+        return view('Admin.Product.Crud-Product.show', compact('product'));
     }
 
     /**

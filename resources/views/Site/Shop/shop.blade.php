@@ -1,4 +1,4 @@
-@extends('Layouts.app')
+@extends('Site.Layouts.app')
 @section('content')
 @section('notifycss')
 @notifyCss
@@ -7,11 +7,7 @@
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                {{-- @auth --}}
                 <a href="{{ route('home-site') }}" rel="nofollow">Home</a>
-                {{-- @else --}}
-                {{-- <a href="{{ route('welcome') }}" rel="nofollow">Home</a> --}}
-                {{-- @endauth --}}
                 <span></span> Shop
             </div>
         </div>
@@ -73,30 +69,21 @@
                                 <div class="product-img-action-wrap">
                                     <div class="product-img product-img-zoom">
                                         <a href="{{ route('get_details_product',$product->id) }}">
-                                            <img class="default-img"
-                                                src="{{ asset('assets/imgs/shop-2/' .  $product->photo )}}" alt="">
-                                            {{-- <img class="hover-img"
-                                                src="{{ asset('assets/imgs/shop/product-2-2.jpg')}}" alt=""> --}}
+                                            @if (Str::startsWith($product->photo,['http://','https://']))
+                                            <img src="{{$product->photo}}">
+                                            @else
+                                            <img src="{{ asset('Images/' .$product->photo) }}">
+                                            @endif
                                         </a>
                                     </div>
-                                    {{-- <div class="product-action-1">
-                                        <a aria-label="Quick view" class="action-btn hover-up" data-bs-toggle="modal"
-                                            data-bs-target="#quickViewModal">
-                                            <i class="fi-rs-search"></i></a>
-                                        <a aria-label="Add To Wishlist" class="action-btn hover-up"
-                                            href="wishlist.php"><i class="fi-rs-heart"></i></a>
-                                        <a aria-label="Compare" class="action-btn hover-up" href="compare.php"><i
-                                                class="fi-rs-shuffle"></i></a>
-                                    </div>
-                                    <div class="product-badges product-badges-position product-badges-mrg">
-                                        <span class="hot">Hot</span>
-                                    </div> --}}
                                 </div>
                                 <div class="product-content-wrap">
                                     <div class="product-category">
-                                        <a href="shop.html">{{ $product->name }}</a>
+                                        <a href="{{ route('get_details_product',$product->id) }}">{{ $product->name
+                                            }}</a>
                                     </div>
-                                    <h2><a href="product-details.html">{{ $product->description }}</a></h2>
+                                    <h2><a href="{{ route('get_details_product',$product->id) }}">{{
+                                            $product->description }}</a></h2>
                                     <div class="rating-result" title="90%">
                                         <span>
                                             <span>90%</span>
@@ -104,12 +91,15 @@
                                     </div>
                                     <div class="product-price">
                                         <span>{{ $product->price }}</span>
-                                        {{-- <span class="old-price">$245.8</span> --}}
+                                        @if ($product->discount)
+                                        <span class="old-price">{{ $product->discount }}</span>
+
+                                        @endif
                                     </div>
-                                    <div class="product-action-1 show">
+                                    {{-- <div class="product-action-1 show">
                                         <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.php"><i
                                                 class="fi-rs-shopping-bag-add"></i></a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -139,17 +129,17 @@
                     <div class="widget-category mb-30">
                         <h5 class="section-title style-1 mb-30 wow fadeIn animated">Category</h5>
                         <ul class="categories">
-                            <li><a href="shop.html">Shoes & Bags</a></li>
-                            <li><a href="shop.html">Blouses & Shirts</a></li>
-                            <li><a href="shop.html">Dresses</a></li>
-                            <li><a href="shop.html">Swimwear</a></li>
-                            <li><a href="shop.html">Beauty</a></li>
-                            <li><a href="shop.html">Jewelry & Watch</a></li>
-                            <li><a href="shop.html">Accessories</a></li>
+                            @php
+                            $categories = \App\Models\Category::get();
+                            @endphp
+                            @foreach ($categories as $category)
+                            <li><a href="{{ route('get_shop',['category_id'=>$category->id]) }}">{{ $category->name
+                                    }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                     <!-- Fillter By Price -->
-                    <div class="sidebar-widget price_range range mb-30">
+                    {{-- <div class="sidebar-widget price_range range mb-30">
                         <div class="widget-header position-relative mb-20 pb-10">
                             <h5 class="widget-title mb-10">Fill by price</h5>
                             <div class="bt-1 border-color-1"></div>
@@ -203,56 +193,43 @@
                             </div>
                         </div>
                         <a href="shop.html" class="btn btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Fillter</a>
-                    </div>
+                    </div> --}}
                     <!-- Product sidebar Widget -->
+                    @php
+                    $new_products = DB::table('products')->selectRaw('id,name,photo,price,rating')->orderByRaw('id
+                    Desc')->take(3)->get();
+                    @endphp
                     <div class="sidebar-widget product-sidebar  mb-30 p-30 bg-grey border-radius-10">
                         <div class="widget-header position-relative mb-20 pb-10">
                             <h5 class="widget-title mb-10">New products</h5>
                             <div class="bt-1 border-color-1"></div>
                         </div>
+                        @foreach ($new_products as $product )
                         <div class="single-post clearfix">
                             <div class="image">
-                                <img src="{{ asset('assets/imgs/shop/thumbnail-3.jpg')}}" alt="#">
+                                @if (Str::startsWith($product->photo,['http://','https://']))
+                                <img src="{{$product->photo}}">
+                                @else
+                                <img src="{{ asset('Images/' .$product->photo) }}">
+                                @endif
                             </div>
                             <div class="content pt-10">
-                                <h5><a href="product-details.html">Chen Cardigan</a></h5>
-                                <p class="price mb-0 mt-5">$99.50</p>
+                                <h5><a href="{{ route('get_details_product',$product->id) }}">{{ $product->name }}</a>
+                                </h5>
+                                <p class="price mb-0 mt-5">{{ $product->price}}</p>
                                 <div class="product-rate">
                                     <div class="product-rating" style="width:90%"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="single-post clearfix">
-                            <div class="image">
-                                <img src="{{ asset('assets/imgs/shop/thumbnail-4.jpg')}}" alt="#">
-                            </div>
-                            <div class="content pt-10">
-                                <h6><a href="product-details.html">Chen Sweater</a></h6>
-                                <p class="price mb-0 mt-5">$89.50</p>
-                                <div class="product-rate">
-                                    <div class="product-rating" style="width:80%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="single-post clearfix">
-                            <div class="image">
-                                <img src="{{ asset('assets/imgs/shop/thumbnail-5.jpg')}}" alt="#">
-                            </div>
-                            <div class="content pt-10">
-                                <h6><a href="product-details.html">Colorful Jacket</a></h6>
-                                <p class="price mb-0 mt-5">$25</p>
-                                <div class="product-rate">
-                                    <div class="product-rating" style="width:60%"></div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                     <div class="banner-img wow fadeIn mb-45 animated d-lg-block d-none">
                         <img src="{{ asset('assets/imgs/banner/banner-11.jpg')}}" alt="">
                         <div class="banner-text">
                             <span>Women Zone</span>
                             <h4>Save 17% on <br>Office Dress</h4>
-                            <a href="shop.html">Shop Now <i class="fi-rs-arrow-right"></i></a>
+                            <a href="{{ route('get_shop') }}">Shop Now <i class="fi-rs-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ use App\Http\Requests\billingAddress;
 use App\Models\Address;
 use App\Models\OptionsProduct;
 use App\Models\OrderItem;
+use App\Models\UserCart;
 use App\Models\UserOrder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,15 +19,16 @@ class OperationsOrder implements IOrder
 
     public function create($request)
     {
+        $cart = UserCart::first();
         DB::beginTransaction();
         try {
             $order = UserOrder::create([
                 'user_id' => Auth::id(),
                 'status_order' => 'pending',
-                // 'status_payment' => 'pending',
-                // 'payment_method' => 'online',
+                'coupone_id' => $cart->coupone_id ?? null,
+                'coupone' => ($cart->coupone_id) ? json_encode($cart->Coupone) : null,
                 'shiping_price' => 0,
-                'total_price' => Cart::total(),
+                'total_price' => $this->CheckCouponeInCart($cart)
             ]);
             foreach (Cart::ShowCart() as $value) {
                 OrderItem::create([
@@ -66,6 +68,15 @@ class OperationsOrder implements IOrder
         } catch (\Throwable $th) {
             DB::rollBack();
             dd($th->getMessage());
+        }
+    }
+    public function CheckCouponeInCart($cart)
+    {
+        $total = Cart::total();
+        if ($cart->coupone_id) {
+            return $total - (($cart->Coupone->discount / 100) * $total);
+        } else {
+            return Cart::total();
         }
     }
 }

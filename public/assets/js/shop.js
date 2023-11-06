@@ -114,9 +114,9 @@
     });
 })(jQuery);
 
-let button = document.querySelector(".submit-form");
-document.querySelector(".submit").addEventListener("click", function () {
-    button.click();
-});
+// let button = document.querySelector(".submit-form");
+// document.querySelector(".submit").addEventListener("click", function () {
+//     button.click();
+// });
 // let old = '{{ old('different_address') }}';
 // let old = '{{ old('different_address') }}';

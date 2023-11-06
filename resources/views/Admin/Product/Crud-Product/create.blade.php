@@ -41,12 +41,15 @@
                 </div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="inputDescribtion">Photo</label><br>
-                <input type="file" id="photo-input" class="form-control @error('photo')
-                is-invalid
-                @enderror" name="photo" style="display: none" value="{{ old('photo') }}">
-                <button id="photo-category" class="btn btn-outline-info">Upload Photo</button>
+            <label>Photo</label>
+            <div class="input-group mb-3">
+                <div class="custom-file col-4">
+                    <input type="file" name="photo" class="custom-file-input @error('photo')
+                    is-invalid
+                    @enderror" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                        value="{{ old('photo') }}">
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
                 @error('photo')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -95,9 +98,8 @@
                 </div>
             </div>
             <div class="form-group">
-                {{-- <input type="number" min="" max=""> --}}
+                {{-- <input type="text" name="counter" style="display: none" value="" id="input"> --}}
                 <a class="btn btn-outline-warning" id="add">
-                    {{-- <i class="fa-solid fa-plus"></i> --}}
                     Add-Option
                 </a>
             </div>
@@ -119,10 +121,6 @@
     </div>
 </div>
 @endsection
-<script>
-    let c = "{{ old('counter') ?? 0}}";
-</script>
 @push('js')
 <script src="{{ asset('dist/js/AutoCreateOption.js') }}"></script>
-
 @endpush

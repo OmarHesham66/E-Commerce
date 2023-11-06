@@ -14,7 +14,7 @@ class Product extends Model
     protected $table = 'products';
     protected $fillable = [
         'name',
-        'title-category',
+        'title',
         'slug',
         'describtion',
         'photo',
@@ -66,7 +66,8 @@ class Product extends Model
         $arr = array_merge([
             'category_id' => null,
             'discount' => null,
-            'fashion' => []
+            'fashion' => [],
+            'search' => null
         ], $data);
         $builder->when($arr['category_id'], function ($builder, $value) {
             return $builder->where('category_id', $value);
@@ -82,6 +83,11 @@ class Product extends Model
                     'super-categories.name',
                     $value
                 );
+        });
+        $builder->when($arr['search'], function ($builder, $value) {
+            return $builder->select('products.*', 'categories.name')
+                ->join('categories', 'categories.id', '=', 'products.category_id')
+                ->where('categories.name', 'LIKE', '%' . $value . '%');
         });
     }
 }

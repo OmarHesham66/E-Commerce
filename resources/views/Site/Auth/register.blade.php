@@ -1,14 +1,10 @@
-@extends('Layouts.app')
+@extends('Site.Layouts.app')
 @section('content')
 <main class="main">
     <div class="page-header breadcrumb-wrap">
         <div class="container">
             <div class="breadcrumb">
-                {{-- @auth --}}
                 <a href="{{ route('home-site') }}" rel="nofollow">Home</a>
-                {{-- @else --}}
-                {{-- <a href="{{ route('welcome') }}" rel="nofollow">Home</a> --}}
-                {{-- @endauth --}}
                 <span></span> Register
             </div>
         </div>
@@ -24,7 +20,8 @@
                                     <div class="heading_s1">
                                         <h3 class="mb-30">Create an Account</h3>
                                     </div>
-                                    <form action="{{ route('post_register') }}" method="post">
+                                    <form action="{{ route('post_register') }}" method="post"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-group">
                                             <input type="text" name="name" placeholder="Name">

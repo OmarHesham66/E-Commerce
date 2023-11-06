@@ -166,7 +166,7 @@ return [
         Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),
@@ -185,6 +185,8 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Money' => 'App\Classes\Money',
         'Crypt' => 'Illuminate\Support\Facades\Crypt',
+        'User' => 'App\Models\User',
+        'Order' => 'App\Models\UserOrder',
     ])->toArray(),
 
 ];

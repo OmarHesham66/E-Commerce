@@ -1,4 +1,7 @@
-@extends('Layouts.app')
+@extends('Site.Layouts.app')
+@section('notifycss')
+@notifyCss
+@endsection
 @section('content')
 <main class="main">
     <div class="page-header breadcrumb-wrap">
@@ -59,12 +62,13 @@
                     <div class="panel-collapse collapse coupon_form " id="coupon">
                         <div class="panel-body">
                             <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
-                            <form method="post">
+                            <form method="post" action="{{ route('check.coupone') }}">
+                                @csrf
                                 <div class="form-group">
-                                    <input type="text]" placeholder="Enter Coupon Code...">
+                                    <input type="text" name="coupone" placeholder="Enter Coupon Code...">
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn  btn-md" name="address[billing][login">Apply Coupon</button>
+                                    <button class="btn  btn-md" type="submit">Apply Coupon</button>
                                 </div>
                             </form>
                         </div>
@@ -330,4 +334,7 @@
         </div>
     </section>
 </main>
+@endsection
+@section('notifyjs')
+@notifyJs
 @endsection

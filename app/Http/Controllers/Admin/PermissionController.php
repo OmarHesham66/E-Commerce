@@ -20,7 +20,7 @@ class PermissionController extends Controller
     public function index()
     {
         $roles = Role::paginate();
-        return view('Admin.Permission.permission', compact('roles'));
+        return view('Admin.Roles.roles', compact('roles'));
     }
 
     /**
@@ -28,7 +28,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('Admin.Permission.Crud-Permission.create');
+        return view('Admin.Roles.Crud-Roles.create');
     }
 
     /**
@@ -51,10 +51,6 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -64,7 +60,7 @@ class PermissionController extends Controller
         $role = Role::findOrFail(Crypt::decrypt($id))->first();
         $permissions = $role->Permissions()->pluck('type', 'name')->toArray();
         // dd($permissions);
-        return view('Admin.Permission.Crud-Permission.edit', compact('role', 'permissions'));
+        return view('Admin.Roles.Crud-Roles.edit', compact('role', 'permissions'));
     }
 
     /**

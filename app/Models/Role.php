@@ -22,9 +22,11 @@ class Role extends Model
     {
         return $this->hasMany(Permission::class, 'role_id');
     }
-    public function Admin()
+    public function Admins()
     {
-        return $this->morphedByMany(Admin::class, 'authorizable', 'role_users');
+        return $this->morphedByMany(Admin::class, 'authorizable', 'role_users')
+            ->using(RoleUser::class)
+            ->withPivot(['id']);
     }
     public static function create_role($request)
     {

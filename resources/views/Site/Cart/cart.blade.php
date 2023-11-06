@@ -1,4 +1,4 @@
-@extends('Layouts.app')
+@extends('Site.Layouts.app')
 @section('content')
 <main class="main">
     <div class="page-header breadcrumb-wrap">

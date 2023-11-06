@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Get_Cookies;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class UserOrder extends Model
 {
-    use HasFactory;
+    use HasFactory, Get_Cookies;
     protected $table = 'users_order';
     protected $fillable = [
         'user_id',
@@ -18,6 +19,7 @@ class UserOrder extends Model
         'status_payment',
         'payment_method',
         'coupone_id',
+        'coupone',
         'shiping_price',
     ];
     protected $hidden = [
@@ -72,5 +74,9 @@ class UserOrder extends Model
     public function shiping()
     {
         return $this->hasOne(Address::class, 'order_id', 'id')->where('type', 'shiping');
+    }
+    public static function get_order($number)
+    {
+        return self::where('order_number', $number)->first()->id;
     }
 }

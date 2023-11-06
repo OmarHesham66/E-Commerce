@@ -19,9 +19,6 @@ class ColorService
             $response = Http::baseUrl($this->base)->get("/id?hex=" . trim($hexs[$i], "#"));
             $arr[] = $response->json()['name']['value'];
         }
-        // foreach ($hexs as $hex) {
-
-        // }
         return $arr;
     }
 }

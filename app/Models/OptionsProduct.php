@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class OptionsProduct extends Model
 {
@@ -17,8 +18,8 @@ class OptionsProduct extends Model
         'product_id',
     ];
     public $timestamps = false;
-    public function Options()
+    public function Product()
     {
-        return $this->belongsTo(OptionsProduct::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

@@ -7,7 +7,7 @@
         <form action="{{ route('option.update',$option->id) }}" method="post">
             @csrf
             @method('put')
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="product_id" value="{{ $option->Product->id }}">
             <div class="form-group col-md-3">
                 <label for="inputCity">Color</label>
                 <input type="color" class="form-control @error('color')

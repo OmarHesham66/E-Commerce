@@ -27,12 +27,20 @@ class Admin extends Authenticatable
     ];
     public function role()
     {
-        return $this->morphToMany(Role::class, 'authorizable', 'role_users');
+        return $this->morphToMany(Role::class, 'authorizable', 'role_users')->withPivot(['id']);
     }
     public function HasPermission($permission)
     {
         return $this->role()->whereHas('permissions', function ($q) use ($permission) {
             $q->where('name', $permission)->where('type', 'allow');
         })->exists();
+    }
+    public function HasRole($role)
+    {
+        return $this->role()->where('roles.id', $role->id)->exists();
+    }
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'Admin.' . $this->id;
     }
 }

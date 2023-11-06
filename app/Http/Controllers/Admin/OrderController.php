@@ -40,10 +40,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show_items(UserOrder $order)
+    public function show(UserOrder $order)
     {
-        $order = $order->load('OrderItems');
-        return view('Admin.Orders.Crud-Order.show_Items', compact('order'));
+        $order = $order->load('OrderItems', 'Addresses');
+        return view('Admin.Orders.Crud-Order.show', compact('order'));
     }
 
     /**
@@ -76,10 +76,5 @@ class OrderController extends Controller
         $order->delete();
         notify()->success('Deleted Order Success !!', 'Deleting');
         return redirect()->route('order.index');
-    }
-    public function show_addresses(UserOrder $order)
-    {
-        $order = $order->load('Addresses');
-        return view('Admin.Orders.Crud-Order.show_addresses', compact('order'));
     }
 }

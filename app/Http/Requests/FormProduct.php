@@ -26,8 +26,8 @@ class FormProduct extends FormRequest
             'category_id' => 'required',
             'describtion' => 'required',
             'price' => 'required|numeric',
+            'photo' => 'required|image|mimes:png,jpg',
             'discount' => 'nullable|numeric',
-            'photo' => 'required|image',
             'title' => 'string',
         ];
     }

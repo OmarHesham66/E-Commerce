@@ -22,7 +22,7 @@ class FormRegister extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|unique:users,email|email',
+            'email' => "required|email",
             'password' => 'required|confirmed',
             'name' => 'required',
             // 'checkbox' => 'required'
@@ -34,7 +34,7 @@ class FormRegister extends FormRequest
             'name.required' => 'The Name Required !!',
             'email.required' => 'The Email Required !!',
             'password.required' => 'The Password Required !!',
-            'email.unique' => 'The Email Invaild !!',
+            // 'email.unique' => 'The Email Invaild !!',
             'email.email' => 'The Email Invaild !!',
             // 'password.unique' => 'The Password Invaild !!',
             // 'checkbox.required' => 'You Must Agree terms & Policy For Registration !'

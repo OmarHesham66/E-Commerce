@@ -22,7 +22,7 @@ class OptionController extends Controller
      */
     public function create(Product $product)
     {
-        return view('Admin.Product.Crud-Options.create', compact('product'));
+        // return view('Admin.Product.Crud-Options.create', compact('product'));
     }
 
     /**
@@ -30,14 +30,14 @@ class OptionController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'color' => 'required',
-            'size' => 'required',
-            'quantity' => 'required|integer'
-        ]);
-        OptionsProduct::create($request->all());
-        notify()->success('Created Option Success !!', 'Creatation');
-        return redirect()->route('product.show', $request->post('product_id'));
+        // $request->validate([
+        //     'color' => 'required',
+        //     'size' => 'required',
+        //     'quantity' => 'required|integer'
+        // ]);
+        // OptionsProduct::create($request->all());
+        // notify()->success('Created Option Success !!', 'Creatation');
+        // return redirect()->route('product.show', $request->post('product_id'));
     }
 
     /**
@@ -51,9 +51,10 @@ class OptionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OptionsProduct $option, Product $product)
+    public function edit(OptionsProduct $option)
     {
-        return view('Admin.Product.Crud-Options.edit', compact('option', 'product'));
+        $option = $option->load('Product');
+        return view('Admin.Product.Crud-Options.edit', compact('option'));
     }
 
     /**

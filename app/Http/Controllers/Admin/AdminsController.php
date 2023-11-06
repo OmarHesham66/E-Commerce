@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class AdminsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    // public function __construct()
+    // {
+    //     $this->authorizeResource(Admin::class, 'admin');
+    // }
     public function index()
     {
-        //
+        $this->authorize('viewAny', Admin::class);
+        $admins = Admin::where('id', '!=', Auth::user()->id)->where('owner', 0)->get();
+        return view('Admin.Managers.managers', compact('admins'));
     }
 
     /**
@@ -34,9 +43,13 @@ class AdminsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $admin = Admin::find(Crypt::decrypt($id));
+        $role = $admin->role[0];
+        // dd($role);
+        $this->authorize('view', $role);
+        return view('Admin.Roles.Crud-Roles.show', compact('role'));
     }
 
     /**

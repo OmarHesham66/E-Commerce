@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\CouponeCountdown;
+use App\Events\CreatedOrder;
+use App\Listeners\ExpireCoupone;
+use App\Listeners\SendNotify;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,7 +21,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-        ],
+        ], CreatedOrder::class => [
+            SendNotify::class,
+        ]
     ];
 
     /**

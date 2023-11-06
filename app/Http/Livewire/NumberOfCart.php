@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-
+use App\Facade\Cart;
 use App\Repository\Cart\ModelCart;
 use App\Traits\Get_Cookies;
 use Livewire\Component;
@@ -14,10 +14,9 @@ class NumberOfCart extends Component
     protected $listeners = ['incermentNumber' => '$refresh'];
     public function render()
     {
-        $Cart = new ModelCart();
-        $this->cart = $Cart->ShowCart();
-        $this->total = $Cart->total();
-        $this->number = (!$this->cart->count()) ?  0 : $Cart->ProductNumber();
-        return view('livewire.ProductPage.number-of-cart');
+        $this->cart = Cart::ShowCart();
+        $this->total = Cart::total();
+        $this->number = (!$this->cart->count()) ?  0 : Cart::ProductNumber();
+        return view('livewire.User.ProductPage.number-of-cart');
     }
 }

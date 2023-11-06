@@ -24,11 +24,7 @@ class AuthController extends Controller
     {
         $checker_user = Auth::guard('web')->attempt(['email' => $req->email, 'password' => $req->password]);
         $checker_admin = Auth::guard('admin')->attempt(['email' => $req->email, 'password' => $req->password]);
-        // if (!$checker_user || !$checker_admin) {
-        //     return view('Site.Auth.login')->with('failed_login', 'The Email or Password Wrong !');
-        // }
         return ($checker_admin) ? redirect()->route('hello-admin') : (($checker_user) ? redirect()->route('home-site') : view('Site.Auth.login')->with('failed_login', 'The Email or Password Wrong !'));
-        //     return ($checker_admin) ? redirect()->route('hello-admin') : redirect()->route('home-site');
     }
     public function get_register()
     {

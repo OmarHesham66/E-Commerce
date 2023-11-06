@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -45,6 +46,22 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected static function booted()
+    {
+        static::updating(function (User $user) {
+            if (request()->has('photo') && request()->photo != null) {
+                $new_photo = request()->file('photo');
+                $path_new_photo = self::save_photo('users_photos', $new_photo);
+                if ($user->photo != 'users_photos/Profile.png') {
+                    Storage::disk('Images')->delete($user->original['photo']);
+                }
+                $user->photo = $path_new_photo;
+            }
+            if (request()->has('password') && request()->password != null) {
+                $user->password = bcrypt(request()->post('password'));
+            }
+        });
+    }
     public function Payments()
     {
         return $this->hasMany(Payment::class, 'user_id');
@@ -56,5 +73,12 @@ class User extends Authenticatable
     public function UserOrder()
     {
         return $this->hasMany(UserOrder::class, 'user_id');
+    }
+    public static function save_photo($path, $photo)
+    {
+        $ex = $photo->getClientOriginalExtension();
+        $fileName = time() . '.' . $ex;
+        $photo->storeAs($path, $fileName, 'Images');
+        return "$path/$fileName";
     }
 }

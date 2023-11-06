@@ -1,20 +1,13 @@
-document
-    .getElementById("photo-category")
-    .addEventListener("click", function (e) {
-        e.preventDefault();
-        document.getElementById("photo-input").click();
-    });
 let btn = document.getElementById("add");
 let counter = 0;
 let once = 0;
-window.onload = function () {
-    if (c > 0) {
-        for (let index = 0; index < c; index++) {
-            btn.click();
-        }
-    }
-};
-let arr_options = [];
+// window.onload = function () {
+//     if (c > 0) {
+//         for (let index = 0; index < c; index++) {
+//             btn.click();
+//         }
+//     }
+// };
 let html_add = `
 <div class="form-group col-md-3">
     <label for="inputCity">Color</label>
@@ -36,10 +29,13 @@ let html_add = `
     </select>
 </div>`;
 let div = document.getElementById("divbtn");
+// let input = document.getElementById("input");
 btn.addEventListener("click", function () {
     counter += 1;
+    // input.setAttribute("value", counter);
     if (counter <= 24) {
         let ele = document.createElement("div");
+        ele.classList.add("form-row");
         ele.classList.add("form-row");
         ele.style.marginTop = "10px";
         ele.innerHTML = html_add;
@@ -53,11 +49,4 @@ btn.addEventListener("click", function () {
             once = 1;
         }
     }
-});
-document.getElementById("inputCity").addEventListener("change", function () {
-    let ele = document.getElementById("sec");
-    let color = ntc.name(this.value);
-    ele.value = color[1];
-    console.log(color);
-    console.log(document.getElementById("sec").value);
 });

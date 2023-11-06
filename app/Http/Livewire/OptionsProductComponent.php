@@ -27,7 +27,7 @@ class OptionsProductComponent extends Component
     }
     public function render()
     {
-        return view('livewire.ProductPage.options-product-component');
+        return view('livewire.User.ProductPage.options-product-component');
     }
     public function SizeByColor($size)
     {
@@ -82,7 +82,6 @@ class OptionsProductComponent extends Component
         $this->activeSize = null;
         $this->activeColor = null;
         $this->colors = null;
-        $this->quantity = $this->total;
         $options = OptionsProduct::where('product_id', $this->product_id);
         $this->sizes = array_unique($options->pluck('size')->toArray());
         $this->total = $this->quantity = $options->sum('quantity');

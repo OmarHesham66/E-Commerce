@@ -19,14 +19,14 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $arr = ['Shirts', 'Jackets', 'Caps', 'Shoes', 'Shorts', 'Hoodies'];
-        // $arr = ['Dresses', 'Blouses', 'Shirts', 'Hoodies', 'WomenSets', 'Leggings', 'Skirts', 'Shorts', 'Jeans'];
-        // $arr = ['Laptops', 'LaptopAccessories', 'Phones', 'PhoneAccessories'];
+        // $arr = ['Shirts', 'Jackets', 'Caps', 'Shoes', 'Shorts', 'Hoodies'];
+        $arr = ['Dresses', 'Blouses', 'Hoodies', 'WomenSets', 'Leggings', 'Skirts', 'Jeans'];
+        // $arr = ['Laptops', 'Accessories-Laptops', 'Phones', 'Accessories-Phones'];
         // $arr2=['']
         return [
             'name' => $arr[$this->counter1++],
-            'photo' =>  $arr[$this->counter2++] . '.jpg',
-            'super_categories_id' => 2
+            'photo' => fake()->imageUrl(650, 650, $arr[$this->counter1], true, $arr[$this->counter1], false, 'png'),
+            'main_category_id' => 3
         ];
     }
 }

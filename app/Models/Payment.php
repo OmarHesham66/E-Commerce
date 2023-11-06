@@ -11,10 +11,12 @@ class Payment extends Model
     protected $table = 'payments';
     protected $fillable = [
         'order_id',
-        'user_id',
-        'status',
+        'invoice_id',
         'payment_method',
+        'currency',
         'total_price',
+        'transction_id',
+        'transction_data',
     ];
     protected $hidden = [
         'created_at',
